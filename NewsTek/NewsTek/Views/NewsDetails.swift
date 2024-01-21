@@ -17,7 +17,7 @@ struct NewsDetails: View {
                 .bold()
                 .multilineTextAlignment(.center)
             
-            AsyncImage(url: URL(string: article.image)) { phase in
+            AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
@@ -35,13 +35,9 @@ struct NewsDetails: View {
                 }
             }
             
-            Text(article.description)
+            Text(article.content)
                 .multilineTextAlignment(.center)
-            
-            
-           
-          
-                
+        
         }
         .padding()
         
@@ -50,5 +46,11 @@ struct NewsDetails: View {
 }
 
 #Preview {
-    NewsDetails(article: Article(author: "Shiv", title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry", description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry", url: "http://rss.cnn.com/~r/rss/cnn_topstories/~3/KwE80_jkKo8/a-sa-dd-3", source: "CNN", image: "https://cdn.cnn.com/cnnnext/dam/assets/150325082152-social-gfx-cnn-logo-super-169.jpg", category: "general", language: "en", country: "us", publishedAt: Date()))
+    NewsDetails(article: Article(
+        source: Source(id: "", name: "hg"), author: "businessinsider.com",
+        title: "I'm an autos reporter who's driven plenty of EVs. My first experience with a Tesla was still eye-opening",
+        description: "Tesla Model 3 Hertz rental in my driveway Nora Naughton Driving a Tesla is unlike any other experience I've had behind the wheel. The nearly buttonless interior was hard to get used to. I'm still not a fan of one-pedal driving. In the more than 10 years I've …",
+        url: "https://biztoc.com/x/577bc24bf1600ecb",
+        urlToImage: "https://c.biztoc.com/p/577bc24bf1600ecb/s.webp",
+        publishedAt: "2024-01-21T11:08:08Z", content: ""))
 }

@@ -7,18 +7,33 @@
 
 import Foundation
 
+enum ViewState<T> {
+        case START
+        case LOADING
+        case SUCCESS(data: T)
+        case FAILURE(error: NTError)
+    }
+
 class HomeViewModel: ObservableObject {
     
     let newsResource: NewsResource
-    @Published var articles: Articles
+    @Published var news: News = News()
+    @Published var ntError: NTError = NTError.noDataReceived
     
     init (newsResource: NewsResource) {
         self.newsResource = newsResource
     }
     
     func getNews() {
-        newsResource.getNewsArticles { Data, err in
-            <#code#>
+        newsResource.getNewsArticles { data, err in
+            DispatchQueue.main.async {
+                guard err == nil, let data = data else {
+                    self.ntError = err!
+                    return
+                }
+                self.news = data
+            }
+            
         }
     }
     

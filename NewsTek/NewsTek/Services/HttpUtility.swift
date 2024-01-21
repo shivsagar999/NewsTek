@@ -9,10 +9,7 @@ import Foundation
 
 class HttpUtility {
     
-    func getAPIData<T: Decodable>(requestURL: URL, resultType: T.Type, completionHandler: @escaping (T?, NTError?)->Void) {
-        
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = "get"
+    func getAPIData<T: Decodable>(request: URLRequest, resultType: T.Type, completionHandler: @escaping (T?, NTError?)->Void) {
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error  in
             
@@ -37,18 +34,12 @@ class HttpUtility {
                 completionHandler(nil, NTError.serializationFailed)
                 
             }
-            
         }
-        
+        task.resume()
     }
     
     
-    func postAPIData<T: Decodable>(requestURL: URL, resultType: T.Type, requestBody: Data, completionHandler: @escaping (T?, NTError?)->Void) {
-        
-        var request = URLRequest(url: requestURL)
-        request.httpMethod = "post"
-        request.httpBody = requestBody
-        request.allHTTPHeaderFields = ["content-type": "application/json"]
+    func postAPIData<T: Decodable>(request: URLRequest, resultType: T.Type, requestBody: Data, completionHandler: @escaping (T?, NTError?)->Void) {
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error  in
             
@@ -73,11 +64,8 @@ class HttpUtility {
                 completionHandler(nil, NTError.serializationFailed)
                 
             }
-            
         }
-        
     }
-    
 }
 
 

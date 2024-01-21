@@ -11,11 +11,11 @@ import Foundation
 struct Constants {
     
     
-    static private let kBaseURL = ""
+    static private let kBaseURL = "https://newsapi.org/v2/"
     
-    static private let kNewsURL = ""
+    static private let kEverythingURL = "everything"
     
     static var newsArticleURL: String {
-        return kBaseURL + kNewsURL
+        return kBaseURL + kEverythingURL
     }
 }
