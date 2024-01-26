@@ -16,24 +16,32 @@ struct NewsDetails: View {
                 .font(.title)
                 .bold()
                 .multilineTextAlignment(.center)
-            
-            AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .clipShape(.rect(cornerRadius: 5))
-                case .failure(_):
-                    Image(systemName: "exclamationmark.triangle")
-                        .imageScale(.large)
-                        .foregroundColor(.red)
-                @unknown default:
-                    EmptyView()
-                }
+            AsyncImage(url: URL(string: article.urlToImage ?? "")) { image  in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(.rect(cornerRadius: 5))
+            } placeholder: {
+                ProgressView()
             }
+
+//            AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
+//                switch phase {
+//                case .empty:
+//                    ProgressView()
+//                case .success(let image):
+//                    image
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .clipShape(.rect(cornerRadius: 5))
+//                case .failure(_):
+//                    Image(systemName: "exclamationmark.triangle")
+//                        .imageScale(.large)
+//                        .foregroundColor(.red)
+//                @unknown default:
+//                    EmptyView()
+//                }
+//            }
             
             Text(article.content)
                 .multilineTextAlignment(.center)
